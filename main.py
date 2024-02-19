@@ -1,10 +1,15 @@
 import currencyapicom
 import sys
 
-
+'''
+POSSIBLE INCORRECT INPUTS
+12
+12.3
+12.34345464876
+'''
 def fix_input(num: float) -> str:
     s = str(num)
-
+    
     digit_list = s.split(".")
     digits_after_decimal = digit_list[1]
 
@@ -17,7 +22,9 @@ def fix_input(num: float) -> str:
 
 
 def print_values(base_pair, converted_values):
-    print(f"\nBASE CURRENCY\n{base_pair[0]}: {base_pair[1]}")
+    base_curr = base_pair[0]
+    base_value = fix_input(base_pair[1])
+    print(f"\nBASE CURRENCY\n{base_curr}: {base_value}")
     print("-" * 5)
 
     for code in converted_values:
@@ -25,14 +32,14 @@ def print_values(base_pair, converted_values):
 
 
 def convert(base_value, exchange_rate):
-    return base_value * exchange_rate
+    return float(base_value) * exchange_rate
 
 
 client = currencyapicom.Client("cur_live_5X7DY8sMMB7D1OCA741glYl7mrdiCy9sPz1VDics")
 
 base_curr = sys.argv[1]
 other_curr = sys.argv[2:]
-base_value = float(fix_input(input(f"Enter a {base_curr} amount: ")))
+base_value = fix_input(float(input(f"Enter a {base_curr} amount: ")))
 
 result = client.latest(base_curr, other_curr)
 other_curr = result["data"]
