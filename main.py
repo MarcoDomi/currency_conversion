@@ -24,9 +24,9 @@ def fix_input(num: float) -> str:
 def print_values(base_pair, converted_values):
     base_curr = base_pair[0]
     base_value = fix_input(base_pair[1])
+    
     print(f"\nBASE CURRENCY\n{base_curr}: {base_value}")
     print("-" * 5)
-
     for code in converted_values:
         print(f"{code}: {converted_values[code]}")
 
