@@ -21,33 +21,34 @@ def fix_input(num: float) -> str:
     return ".".join(digit_list)
 
 
-def print_values(base_pair, converted_values):
-    base_curr = base_pair[0]
-    base_value = fix_input(base_pair[1])
-    
-    print(f"\nBASE CURRENCY\n{base_curr}: {base_value}")
+def print_values(base_currency_pair, converted_values):
+    base_currency_code = base_currency_pair[0] #base currency code
+    base_currency_amount = fix_input(base_currency_pair[1]) #base currency amount
+
+    print(f"\nBASE CURRENCY\n{base_currency_code}: {base_currency_amount}\n") #why not return error?
     print("-" * 5)
-    for code in converted_values:
-        print(f"{code}: {converted_values[code]}")
+    for code, value in converted_values.items():
+        print(f"{code}: {value}")
 
 
 def convert(base_value, exchange_rate):
     return float(base_value) * exchange_rate
 
 
+
 client = currencyapicom.Client("cur_live_5X7DY8sMMB7D1OCA741glYl7mrdiCy9sPz1VDics")
 
-base_curr = sys.argv[1]
-other_curr = sys.argv[2:]
-base_value = fix_input(float(input(f"Enter a {base_curr} amount: ")))
+base_currency_code = sys.argv[1]
+other_currency_code = sys.argv[2:]
+base_value = fix_input(float(input(f"Enter a {base_currency_code} amount: ")))
 
-result = client.latest(base_curr, other_curr)
-other_curr = result["data"]
+result = client.latest(base_currency_code, other_currency_code)
+other_currency_data = result["data"]
 
 converted_values = {}
-for key in other_curr:
-    other_val = other_curr[key]["value"]
+for key in other_currency_data:
+    other_val = other_currency_data[key]["value"]
     converted_values[key] = convert(base_value, other_val)
 
-base_pair = (base_curr, base_value)
+base_pair = (base_currency_code, base_value)
 print_values(base_pair, converted_values)
