@@ -25,20 +25,20 @@ def fix_input(num: float) -> str:
 
     digit_list[1] = check_digit_length(digits_after_decimal)
 
-    correct_currency_amount = ".".join(digit_list)
+    correct_currency_amount = float(".".join(digit_list))
     return correct_currency_amount
 
 
 def print_values(base_currency_code, base_currency_amount, converted_values):
-
+    base_currency_amount = check_digit_length(str(base_currency_amount))
     print(f"\nBASE CURRENCY\n{base_currency_code}: {base_currency_amount}") 
     print("-" * 5)
     for code, value in converted_values.items():
         print(f"{code}: {value}")
 
 
-def convert(base_value, exchange_rate):
-    return float(base_value) * exchange_rate
+def convert(base_value:float, exchange_rate:float):
+    return base_value * exchange_rate
 
 
 client = currencyapicom.Client("cur_live_5X7DY8sMMB7D1OCA741glYl7mrdiCy9sPz1VDics")
