@@ -7,30 +7,36 @@ POSSIBLE INCORRECT INPUTS
 12.3
 12.34345464876
 '''
-def check_digit_length(digits_str):
-    digit_count = len(digits_str)
 
-    if digit_count == 1:
-        digits_str += "0"
-    elif digit_count > 2:
-        digits_str = digits_str[:2] 
-
-    return digits_str
-
-def fix_input(num: float) -> str:
-    s = str(num)
-
-    digit_list = s.split(".")
+def check_digit_length(digit_str:str) -> str:
+    digit_list = digit_str.split('.')
     digits_after_decimal = digit_list[1]
 
-    digit_list[1] = check_digit_length(digits_after_decimal)
+    if len(digits_after_decimal) == 1:
+        digit_str += '0'
+    
+    return digit_str
+    
 
-    correct_currency_amount = float(".".join(digit_list))
-    return correct_currency_amount
+def format_input(digit_str: str) -> float:
+
+    if digit_str.find(".") == -1:
+        correct_currency_amount = digit_str + ".0"
+    else:
+        digit_list = digit_str.split(".")
+        digits_after_decimal = digit_list[1]
+
+        if len(digits_after_decimal) > 2:
+            digit_list[1] = digits_after_decimal[:2]
+
+        correct_currency_amount = ".".join(digit_list)
+        
+    return float(correct_currency_amount)
 
 
 def print_values(base_currency_code, base_currency_amount, converted_values):
     base_currency_amount = check_digit_length(str(base_currency_amount))
+    
     print(f"\nBASE CURRENCY\n{base_currency_code}: {base_currency_amount}") 
     print("-" * 5)
     for code, value in converted_values.items():
@@ -45,7 +51,7 @@ client = currencyapicom.Client("cur_live_5X7DY8sMMB7D1OCA741glYl7mrdiCy9sPz1VDic
 
 base_currency_code = sys.argv[1]
 other_currency_code = sys.argv[2:]
-base_value = fix_input(float(input(f"Enter a {base_currency_code} amount: ")))
+base_value = format_input(input(f"Enter a {base_currency_code} amount: "))
 
 result = client.latest(base_currency_code, other_currency_code)
 other_currency_data = result["data"]
