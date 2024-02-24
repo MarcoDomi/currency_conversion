@@ -16,7 +16,7 @@ def check_digit_length(digit_str:str) -> str:
         digit_str += '0'
     
     return digit_str
-    
+
 
 def format_input(digit_str: str) -> float:
 
@@ -35,7 +35,6 @@ def format_input(digit_str: str) -> float:
 
 
 def print_values(base_currency_code, base_currency_amount, converted_values):
-    base_currency_amount = check_digit_length(str(base_currency_amount))
     
     print(f"\nBASE CURRENCY\n{base_currency_code}: {base_currency_amount}") 
     print("-" * 5)
@@ -61,5 +60,5 @@ for key in other_currency_data:
     other_value = other_currency_data[key]["value"]
     converted_values[key] = convert(base_value, other_value)
 
-
+base_value = check_digit_length(str(base_value))
 print_values(base_currency_code, base_value, converted_values)
