@@ -38,7 +38,7 @@ def format_input(digit_str: str) -> float:
     return float(correct_currency_amount) #convert to float and return
 
 
-def print_values(base_currency_code, base_currency_amount, converted_values):
+def print_values(base_currency_code, base_currency_amount, converted_values) -> None:
     '''print all info related to currency conversion'''
     print(f"\nBASE CURRENCY\n{base_currency_code}: {base_currency_amount}") 
     print("-" * 5)
@@ -46,12 +46,12 @@ def print_values(base_currency_code, base_currency_amount, converted_values):
         print(f"{code}: {value}")
 
 
-def convert(base_value:float, exchange_rate:float):
+def convert(base_value:float, exchange_rate:float) -> float:
     '''perform currency conversion by multiplying base value with exchange rate'''
     return base_value * exchange_rate 
 
 
-def get_converted_values(base_amount, currency_data):
+def get_converted_values(base_amount:float, currency_data:dict) -> dict:
     '''get dictionary of converted base values for each desired currency'''
     converted_values = {}
     for key in currency_data:  #iterate thru other currencies
